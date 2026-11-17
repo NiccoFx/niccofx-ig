@@ -203,7 +203,7 @@ def draw_chart(img, t, els):
         elif k == "divider":
             g = ease((t - e["a"]) / 0.4); d.line([e["x"], e["y1"], e["x"], e["y1"] + (e["y2"] - e["y1"]) * g], fill=c(e.get("col", "gray")) + (int(al * 0.6),), width=3)
         elif k == "bar":
-            col = c(e["col"]); g = ease((t - e["a"]) / 0.6) * e["frac"]; x, y, w, h = e["x"], e["y"], e["w"], e["h"]
+            col = c(e["col"]); g = (1 - cl((t - e["a"]) / e["dur"]) if e.get("countdown") else ease((t - e["a"]) / e.get("dur", 0.6))) * e["frac"]; x, y, w, h = e["x"], e["y"], e["w"], e["h"]
             d.rounded_rectangle([x, y, x + w, y + h], radius=h // 2, fill=(40, 44, 54, al))
             if g > 0.01: d.rounded_rectangle([x, y, x + max(h, w * g), y + h], radius=h // 2, fill=col + (al,))
         elif k == "dots":
