@@ -74,4 +74,4 @@ HEAD = [(0, "GOLD CHART TEST", "3 NEW CHARTS", "gold"), (3.42, "CAREFUL", "ROUND
 BG = [(0, "orange"), (3.42, "red"), (5.98, "blue"), (9.3, "orange"), (12.58, "red"), (17.76, "blue"), (22.26, "orange"), (25.34, "green"),
       (29.82, "red"), (34.76, "orange"), (37.36, "red"), (41.8, "orange")]
 ZOOM = []
-e, h, b, s2 = cta(44.05, 46.16, 46.3, 49.38, 52.16, DUR); EL += e; HEAD += h + [(52.16, "FOLLOW FOR", "TEST #3", "green")]; BG += b; SFX += s2
+e, h, b, s2 = cta(44.05, 46.16, 46.3, 49.38, 52.16, DUR); EL += e; HEAD += h[:-1] + [(52.16, "FOLLOW FOR", "TEST #3", "green")]; BG += b; SFX += s2
