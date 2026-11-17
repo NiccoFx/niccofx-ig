@@ -27,7 +27,7 @@ SFX += [("impact", 0.1), ("pop", 2.06), ("pop", 2.31), ("pop", 2.56), ("pop", 3.
 R1 = [(40,50,38,48),(48,70,46,66),(66,67,54,56),(56,70,55,64),(64,66,56,58),(58,66,57,65)]
 EL += cs(R1, 150, 80, 6.0, 17.76, stag=0.12)
 EL += cs([(65,78,64,66),(66,67,52,54),(54,55,40,42)], 630, 80, 12.6, 17.76, stag=0.3, extra={0: (12.6, 0.5)})
-EL += [dict(k="hline", p=70, x1=200, x2=1000, col="gold", a=7.0, b=17.76), dict(k="label", text="EQUAL HIGHS", x=920, y=Y(70)-26, size=24, col="gold", a=7.1, b=17.76),
+EL += [dict(k="hline", p=70, x1=200, x2=1000, col="gold", a=7.0, b=17.76), dict(k="label", text="EQUAL HIGHS", x=600, y=Y(70)-30, size=24, col="gold", a=7.1, b=17.76),
        dict(k="dots", pts=[(230, 70), (390, 70)], col="gold", a=7.2, b=17.76),
        dict(k="pill", text="STOPS SIT HERE", col="gold", fg=(20, 20, 22), x=330, y=Y(82), a=13.86, b=17.76),
        dict(k="ring", x=630, y=Y(76), r=34, col="red", a=13.0, b=17.76),
