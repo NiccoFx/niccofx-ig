@@ -1,5 +1,5 @@
-from cta import cs, Y
-DUR = 52.4
+from cta import cs, Y, cta
+DUR = 55.6
 MUSIC = "/home/user/repo/w/quiz2/music_a.mp3"
 MUSIC_VOL = 0.32
 EL, SFX = [], []
@@ -58,14 +58,10 @@ EL += [dict(k="hline", p=48, x1=300, x2=1000, col="gray", a=30.5, b=41.8), dict(
 e, s = quiz(34.76, 35.31, 37.36, "YES, BUY", "NO", 1, 41.8, qy=Y(66)); EL += e; SFX += s + [("impact", 31.36), ("pop", 33.64), ("pop", 37.86)]
 
 # score + book + CTA
-EL += [dict(k="ui", ui="card", x=540, y=930, a=41.85, b=44.06, border="gold",
+EL += [dict(k="ui", ui="card", x=540, y=930, a=41.85, b=44.0, border="gold",
             lines=[["YOUR SCORE?", 44, "gray"], ["_ / 3", 170, "gold"], ["COMMENT IT BELOW", 40, "white"]]),
-       dict(k="ui", ui="card", x=540, y=930, a=44.1, b=47.88, border="gold",
-            lines=[["THE ULTIMATE COMPLETE", 48, "white"], ["TRADING A TO Z", 110, "gold"], ["320 pages · 15 parts · 250 chapters", 34, "gray"]]),
-       dict(k="pill", text="ALL OF THIS IS INSIDE", col="green", size=44, x=540, y=1260, a=44.9, b=47.88),
-       dict(k="ui", ui="profile", x=540, y=1010, a=47.88, b=DUR),
-       dict(k="ui", ui="comment", x=540, y=1170, a=47.95, b=DUR, type="TRADING")]
-SFX += [("whoosh", 41.8), ("pop", 42.9), ("whoosh", 44.06), ("impact", 44.2), ("pop", 44.9), ("whoosh", 47.88), ("pop", 48.3), ("ding", 49.3)]
+       ]
+SFX += [("whoosh", 41.8), ("pop", 42.9)]
 
 HEAD = [(0, "GOLD CHART TEST", "3 NEW CHARTS", "gold"), (3.42, "CAREFUL", "ROUND 3 IS A TRAP", "red"),
         (5.98, "ROUND 1 / 3", "TWO EQUAL HIGHS", "blue"), (9.3, "ROUND 1 / 3", "BREAKOUT OR SWEEP?", "white"),
@@ -74,9 +70,8 @@ HEAD = [(0, "GOLD CHART TEST", "3 NEW CHARTS", "gold"), (3.42, "CAREFUL", "ROUND
         (25.34, "ANSWER", "BUY. THAT'S THE ZONE", "green"),
         (29.82, "ROUND 3 / 3", "THE TRAP", "red"), (34.76, "ROUND 3 / 3", "BUY THE DIP?", "white"),
         (37.36, "ANSWER", "NO. THE TREND FLIPPED", "red"),
-        (41.8, "HOW MANY DID YOU GET?", "COMMENT YOUR SCORE", "gold"),
-        (44.06, "ALL OF THIS IS IN", "MY BOOK", "orange"),
-        (47.88, "WANT THE LINK? COMMENT", '"TRADING"', "orange"), (49.24, "FOLLOW FOR", "TEST #3", "green")]
+        (41.8, "HOW MANY DID YOU GET?", "COMMENT YOUR SCORE", "gold")]
 BG = [(0, "orange"), (3.42, "red"), (5.98, "blue"), (9.3, "orange"), (12.58, "red"), (17.76, "blue"), (22.26, "orange"), (25.34, "green"),
-      (29.82, "red"), (34.76, "orange"), (37.36, "red"), (41.8, "orange"), (49.24, "green")]
+      (29.82, "red"), (34.76, "orange"), (37.36, "red"), (41.8, "orange")]
 ZOOM = []
+e, h, b, s2 = cta(44.05, 46.16, 46.3, 49.38, 52.16, DUR); EL += e; HEAD += h + [(52.16, "FOLLOW FOR", "TEST #3", "green")]; BG += b; SFX += s2
