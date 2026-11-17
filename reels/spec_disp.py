@@ -2,9 +2,9 @@ from cta import cta, cs, Y
 DUR = 28.5
 EL = cs([(50,58,44,52),(52,60,45,49),(49,57,43,53)], 300, 120, 0.0, 1.86, stag=0.1)
 EL += [dict(k="candle", ohlc=(53,90,52,88), x=660, w=90, a=0.9, b=1.86, g=0.4)]
-EL += [dict(k="divider", x=540, y1=600, y2=1460, a=3.3, b=17.76),
-       dict(k="label", text="NORMAL", x=290, y=640, size=32, col="gray", a=3.4, b=17.76),
-       dict(k="label", text="DISPLACEMENT", x=790, y=640, size=32, col="green", a=8.0, b=17.76)]
+EL += [dict(k="divider", x=540, y1=650, y2=1460, a=3.3, b=17.76),
+       dict(k="label", text="NORMAL", x=290, y=690, size=32, col="gray", a=3.4, b=17.76),
+       dict(k="label", text="DISPLACEMENT", x=790, y=690, size=32, col="green", a=8.0, b=17.76)]
 for j, c in enumerate([(50,64,38,53),(53,66,42,50),(50,63,40,54),(54,65,44,51)]):
     EL.append(dict(k="candle", ohlc=c, x=150+j*95, w=50, a=3.5+j*0.15, b=17.76, g=0.3))
 EL += [dict(k="label", text="BODY", x=100, y=1360, size=24, col="gray", anchor="lm", a=4.3, b=17.76),
