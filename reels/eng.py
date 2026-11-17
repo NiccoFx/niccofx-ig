@@ -51,6 +51,11 @@ def win(t, a, b, fi=0.15, fo=0.15):
 def Y(p): return 1560 - p * 10
 
 
+def Ye(e, p):
+    """price->y for an element: optional per-element scale (ys px per unit) and pixel offset (oy)"""
+    return 1560 - p * e.get("ys", 10) + e.get("oy", 0)
+
+
 # ---------- background ----------
 yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
 G = np.exp(-(((xx - W / 2) / 820) ** 2 + ((yy - 760) / 900) ** 2) * 1.6)[..., None]
@@ -147,8 +152,8 @@ def draw_candle(d, e, t):
     hi = max(o, cur) + (h - max(o, cc)) * k if h > max(o, cc) else max(o, cur)
     lo = min(o, cur) - (min(o, cc) - l) * k
     al = int(255 * e.get("op", 1))
-    d.line([x, Y(hi), x, Y(lo)], fill=col + (al,), width=7)
-    y1, y2 = sorted([Y(o), Y(cur)])
+    d.line([x, Ye(e, hi), x, Ye(e, lo)], fill=col + (al,), width=7)
+    y1, y2 = sorted([Ye(e, o), Ye(e, cur)])
     d.rectangle([x - w / 2, y1, x + w / 2, max(y2, y1 + 4)], fill=col + (al,))
 
 
@@ -158,7 +163,7 @@ def dashed(d, x1, y, x2, col, al=255, w=4, dash=22, gap=14):
         d.line([x, y, min(x + dash, x2), y], fill=col + (al,), width=w); x += dash + gap
 
 
-CHART_KINDS = ("candle", "hline", "box", "ring", "bracket", "arrow", "dots")
+CHART_KINDS = ("candle", "hline", "box", "ring", "bracket", "arrow", "dots", "band", "divider", "bar")
 
 
 def draw_chart(img, t, els):
@@ -173,18 +178,18 @@ def draw_chart(img, t, els):
         elif k == "hline":
             g = ease((t - e["a"]) / 0.35); x2 = e["x1"] + (e["x2"] - e["x1"]) * g; col = c(e["col"])
             if e.get("dash", True):
-                dashed(d, e["x1"], Y(e["p"]), x2, col, int(al * 0.9))
+                dashed(d, e["x1"], Ye(e, e["p"]), x2, col, int(al * 0.9))
             else:
-                d.line([e["x1"], Y(e["p"]), x2, Y(e["p"])], fill=col + (al,), width=4)
+                d.line([e["x1"], Ye(e, e["p"]), x2, Ye(e, e["p"])], fill=col + (al,), width=4)
         elif k == "box":
-            col = c(e["col"]); y1, y2 = sorted([Y(e["p1"]), Y(e["p2"])])
+            col = c(e["col"]); y1, y2 = sorted([Ye(e, e["p1"]), Ye(e, e["p2"])])
             d.rectangle([e["x1"], y1, e["x2"], y2], fill=col + (int(al * e.get("fill", 0.14)),), outline=col + (int(al * 0.7),), width=3)
         elif k == "ring":
             r = e.get("r", 34) * (0.6 + 0.4 * back((t - e["a"]) / 0.3)); col = c(e["col"])
             d.ellipse([e["x"] - r, e["y"] - r, e["x"] + r, e["y"] + r], outline=col + (al,), width=6)
         elif k == "bracket":
             col = c(e["col"]); g = ease((t - e["a"]) / 0.3); x = e["x"]
-            y1, y2 = sorted([Y(e["p1"]), Y(e["p2"])]); m = (y1 + y2) / 2; hh = (y2 - y1) / 2 * g
+            y1, y2 = sorted([Ye(e, e["p1"]), Ye(e, e["p2"])]); m = (y1 + y2) / 2; hh = (y2 - y1) / 2 * g
             d.line([x, m - hh, x, m + hh], fill=col + (al,), width=5)
             d.line([x - 14, m - hh, x, m - hh], fill=col + (al,), width=5); d.line([x - 14, m + hh, x, m + hh], fill=col + (al,), width=5)
         elif k == "arrow":
@@ -193,10 +198,18 @@ def draw_chart(img, t, els):
             ang = math.atan2(ye - y1, xe - x1)
             for s in (-1, 1):
                 d.line([xe, ye, xe - 34 * math.cos(ang + s * 0.5), ye - 34 * math.sin(ang + s * 0.5)], fill=col + (al,), width=8)
+        elif k == "band":
+            col = c(e["col"]); d.rectangle([e["x1"], e["y1"], e["x2"], e["y2"]], fill=col + (int(al * e.get("fill", 0.16)),), outline=col + (int(al * 0.6),), width=2)
+        elif k == "divider":
+            g = ease((t - e["a"]) / 0.4); d.line([e["x"], e["y1"], e["x"], e["y1"] + (e["y2"] - e["y1"]) * g], fill=c(e.get("col", "gray")) + (int(al * 0.6),), width=3)
+        elif k == "bar":
+            col = c(e["col"]); g = ease((t - e["a"]) / 0.6) * e["frac"]; x, y, w, h = e["x"], e["y"], e["w"], e["h"]
+            d.rounded_rectangle([x, y, x + w, y + h], radius=h // 2, fill=(40, 44, 54, al))
+            if g > 0.01: d.rounded_rectangle([x, y, x + max(h, w * g), y + h], radius=h // 2, fill=col + (al,))
         elif k == "dots":
             col = c(e["col"])
             for j, (x, p) in enumerate(e["pts"]):
-                aa = int(al * cl((t - e["a"] - j * 0.05) / 0.15)); d.ellipse([x - 9, Y(p) - 9, x + 9, Y(p) + 9], fill=col + (aa,))
+                aa = int(al * cl((t - e["a"] - j * 0.05) / 0.15)); d.ellipse([x - 9, Ye(e, p) - 9, x + 9, Ye(e, p) + 9], fill=col + (aa,))
     if not any_:
         return
     small = lay.resize((W // 4, H // 4), Image.BILINEAR).filter(ImageFilter.GaussianBlur(7)).resize((W, H), Image.BILINEAR)
@@ -397,11 +410,30 @@ def draw_top(img):
     ImageDraw.Draw(img).text((x0 + 56, 88), "@niccofx", font=f, fill=(190, 196, 206, 230), anchor="lm")
 
 
+def camera(t):
+    """S.ZOOM = [(t0, scale, cx, cy), ...]; eased 0.6s between keys"""
+    keys = getattr(S, "ZOOM", None)
+    if not keys:
+        return 1.0, W / 2, H / 2
+    s, cx, cy = 1.0, W / 2, H / 2
+    for (t0, s1, x1, y1) in keys:
+        if t >= t0:
+            k = ease((t - t0) / 0.6); s, cx, cy = s + (s1 - s) * k, cx + (x1 - cx) * k, cy + (y1 - cy) * k
+    return s, cx, cy
+
+
 def frame(t):
     img = background(t).convert("RGBA")
+    lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    draw_chart(lay, t, [e for e in S.EL if e["k"] in CHART_KINDS])
+    draw_ui_layer(lay, t, [e for e in S.EL if e["k"] in UI_KINDS and e.get("cam", True)])
+    s, cx, cy = camera(t)
+    if s > 1.001:
+        cw, chh = W / s, H / s; px = min(max(cx, cw / 2), W - cw / 2); py = min(max(cy, chh / 2), H - chh / 2)
+        lay = lay.resize((W, H), Image.BILINEAR, box=(px - cw / 2, py - chh / 2, px + cw / 2, py + chh / 2))
+    img.alpha_composite(lay)
+    draw_ui_layer(img, t, [e for e in S.EL if e["k"] in UI_KINDS and not e.get("cam", True)])
     draw_top(img)
-    draw_chart(img, t, [e for e in S.EL if e["k"] in CHART_KINDS])
-    draw_ui_layer(img, t, [e for e in S.EL if e["k"] in UI_KINDS])
     draw_head(img, t)
     foot = getattr(S, "FOOT", "Education only · Not financial advice")
     if foot:
