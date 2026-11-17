@@ -168,7 +168,7 @@ CHART_KINDS = ("candle", "hline", "box", "ring", "bracket", "arrow", "dots", "ba
 
 def draw_chart(img, t, els):
     lay = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(lay); any_ = False
-    for e in els:
+    for e in sorted(els, key=lambda e: 0 if e["k"] in ("box", "band") else 1):
         k = e["k"]; A = win(t, e["a"], e["b"])
         if A <= 0:
             continue

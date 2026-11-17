@@ -22,6 +22,6 @@ HEAD = [(0, "XAU/USD", "STOP BUYING AT THE TOP", "red"), (2.12, "HERE'S THE", "5
         (7.8, "TOP HALF =", "PREMIUM", "red"), (10.96, "BOTTOM HALF =", "DISCOUNT", "green"),
         (14.4, "IN AN UPTREND", "ONLY BUY IN DISCOUNT", "green"), (16.9, "IN A DOWNTREND", "ONLY SELL IN PREMIUM", "red")]
 BG = [(0, "red"), (2.12, "orange"), (3.96, "orange"), (7.8, "red"), (10.96, "green"), (16.9, "red")]
-ZOOM = [(7.9, 1.25, 540, Y(66)), (10.96, 1.25, 540, Y(38)), (14.4, 1.0, 540, 960), (19.76, 1.0, 540, 960)]
+ZOOM = [(7.9, 1.12, 540, Y(60)), (10.96, 1.12, 540, Y(44)), (14.4, 1.0, 540, 960), (19.76, 1.0, 540, 960)]
 SFX = [("whoosh", t) for t in (2.12, 3.96, 6.4, 7.8, 10.96, 14.4, 16.9)] + [("pop", t) for t in (0.5, 4.4, 5.4, 6.6, 9.4, 12.7, 15.5, 18.0)] + [("impact", t) for t in (1.2, 2.3, 6.5)]
 e, h, b, s = cta(19.76, 21.24, 21.62, 22.48, 25.44, DUR); EL += e; HEAD += h; BG += b; SFX += s
