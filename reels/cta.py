@@ -13,3 +13,17 @@ def cta(t_want, t_follow, t_comment, t_if, t_end, dur, key="SMA"):
     SFX = [("whoosh", t_want), ("whoosh", t_if), ("whoosh", t_end), ("pop", t_want + 0.15), ("pop", t_follow + 0.05),
            ("pop", t_comment + 0.3), ("pop", t_if + 1.1), ("ding", t_end + 0.1)]
     return EL, HEAD, BG, SFX
+
+
+def cs(data, x0, sp, a0, b, stag=0.06, extra=None):
+    """Candles: data=[(o,h,l,c)], x positions x0+j*sp, appear from a0 staggered; extra={j:(a,grow)}"""
+    out = []
+    for j, ohlc in enumerate(data):
+        a = a0 + j * stag; g = 0.25
+        if extra and j in extra:
+            a, g = extra[j]
+        out.append(dict(k="candle", ohlc=ohlc, x=x0 + j * sp, a=a, b=b, g=g))
+    return out
+
+
+def Y(p): return 1560 - p * 10
