@@ -25,6 +25,6 @@ HEAD = [(0, "YOU SET YOUR STOP", "PRICE GETS CLOSE", "orange"), (2.54, "YOU", "M
         (9.54, "RULE 1", "STOP = WHERE YOU'RE WRONG", "green"), (14.56, "RULE 2", "SIZE FROM THE STOP", "green"),
         (19.52, "RULE 3", "SET IT AND WALK AWAY", "green")]
 BG = [(0, "orange"), (2.54, "red"), (7.64, "orange"), (9.54, "green")]
-ZOOM = [(0.0, 1.0, 540, 960), (2.54, 1.15, 540, Y(44)), (5.22, 1.0, 540, 960)]
+ZOOM = []
 SFX = [("whoosh", t) for t in (2.54, 3.56, 5.22, 7.64, 9.54, 14.56, 19.52)] + [("pop", t) for t in (7.9, 8.15, 8.4, 11.3, 15.3, 18.32, 22.04)] + [("impact", t) for t in (2.54, 3.56, 5.4, 20.22, 21.04)]
 e, h, b, s = cta(23.58, 25.1, 25.46, 26.3, 29.26, DUR); EL += e; HEAD += h; BG += b; SFX += s
