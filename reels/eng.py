@@ -375,6 +375,9 @@ def draw_ui_layer(img, t, els):
         elif k == "big":
             s = 0.6 + 0.4 * back((t - e["a"]) / 0.3)
             paste(img, tile(e["text"], F("Anton", e.get("size", 200)), c(e["col"]), glow=30, ga=0.8), e["x"], e["y"], s, A)
+        elif k == "img":
+            s = e.get("s", 1.0) * (0.85 + 0.15 * back((t - e["a"]) / 0.35))
+            paste(img, img_tile(e["src"], e["w"]), e["x"], e["y"], s, A, e.get("rot", 0))
         elif k == "chips":
             for j, lab in enumerate(e["items"]):
                 tj = e["a"] + j * e.get("st", 0.22)
@@ -385,6 +388,15 @@ def draw_ui_layer(img, t, els):
                 tj = e["a"] + j * 0.25
                 if t >= tj:
                     paste(img, num_tile(j + 1, c(e.get("col", "orange"))), e["x0"] + j * e["dx"], e["y"], 0.3 + 0.7 * back((t - tj) / 0.3), A)
+
+
+_imgs = {}
+def img_tile(src, w):
+    key = (src, w)
+    if key not in _imgs:
+        im = Image.open(src).convert("RGBA"); h = int(im.height * w / im.width)
+        _imgs[key] = im.resize((w, h), Image.LANCZOS)
+    return _imgs[key]
 
 
 # ---------- headline / chrome ----------
