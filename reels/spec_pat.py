@@ -2,7 +2,7 @@ from cta import Y
 DUR = 47.8
 MUSIC = "/home/user/repo/w/pat/music.mp3"
 MUSIC_VOL = 0.26
-YS, OY = 9, -170
+YS, OY = 11, 12
 def YY(p): return 1560 - p * YS + OY
 EL, SFX = [], []
 
@@ -27,7 +27,7 @@ def place(cs, a0, b, span=4.0, x0=170, x1=910, grow=0.25):
     return xs
 
 def name(text, col, a, b):
-    EL.append(dict(k="pill", text=text, col=col, size=50, x=540, y=1480, a=a, b=b))
+    EL.append(dict(k="pill", text=text, col=col, size=50, x=540, y=1580, a=a, b=b))
     SFX.extend([("whoosh", a), ("pop", a + 0.05)])
 
 # 1 head & shoulders  0 - 7.88
@@ -60,7 +60,7 @@ pole = seq([22, 70], 3); flag = seq([70, 62, 66, 58, 62, 55], 1); brk = seq([55,
 xs = place(pole + flag + brk, 20.6, 26.47, span=4.2)
 EL += [dict(k="seg", x1=xs[3], x2=xs[8], p1=72, p2=64, col="gold", dash=True, a=23.1, b=26.47, ys=YS, oy=OY),
        dict(k="seg", x1=xs[3], x2=xs[8], p1=60, p2=52, col="gold", dash=True, a=23.2, b=26.47, ys=YS, oy=OY),
-       dict(k="label", text="POLE", x=xs[1] - 40, y=YY(46), size=24, col="green", a=21.5, b=26.47),
+       dict(k="label", text="POLE", x=xs[1] + 75, y=YY(46), size=24, col="green", a=21.5, b=26.47),
        dict(k="label", text="FLAG", x=xs[6], y=YY(76), size=24, col="gold", a=23.1, b=26.47),
        dict(k="arrow", x1=xs[-2] - 20, y1=YY(62), x2=xs[-1] + 50, y2=YY(90), col="green", a=24.92, b=26.47)]
 name("BULL FLAG", "green", 20.58, 26.47); SFX += [("impact", 21.0), ("pop", 23.1), ("impact", 24.92)]
@@ -69,7 +69,7 @@ pole = seq([80, 32], 3); flag = seq([32, 40, 36, 44, 40, 46], 1); brk = seq([46,
 xs = place(pole + flag + brk, 26.5, 32.56, span=4.2)
 EL += [dict(k="seg", x1=xs[3], x2=xs[8], p1=42, p2=50, col="gold", dash=True, a=29.04, b=32.56, ys=YS, oy=OY),
        dict(k="seg", x1=xs[3], x2=xs[8], p1=30, p2=38, col="gold", dash=True, a=29.1, b=32.56, ys=YS, oy=OY),
-       dict(k="label", text="POLE", x=xs[1] - 40, y=YY(58), size=24, col="red", a=27.4, b=32.56),
+       dict(k="label", text="POLE", x=xs[1] + 75, y=YY(58), size=24, col="red", a=27.4, b=32.56),
        dict(k="label", text="FLAG", x=xs[6], y=YY(55), size=24, col="gold", a=29.0, b=32.56),
        dict(k="arrow", x1=xs[-2] - 20, y1=YY(40), x2=xs[-1] + 50, y2=YY(10), col="red", a=30.86, b=32.56)]
 name("BEAR FLAG", "red", 26.47, 32.56); SFX += [("impact", 26.9), ("pop", 29.04), ("impact", 30.86)]
@@ -77,7 +77,7 @@ name("BEAR FLAG", "red", 26.47, 32.56); SFX += [("impact", 26.9), ("pop", 29.04)
 cs = seq([30, 65, 42, 65, 50, 65, 57, 65, 84], 1); xs = place(cs, 32.6, 38.94, span=4.4)
 EL += [dict(k="hline", p=66.5, x1=150, x2=1000, col="red", a=33.98, b=38.94, ys=YS, oy=OY),
        dict(k="label", text="FLAT HIGHS", x=910, y=YY(66) - 26, size=24, col="red", a=34.0, b=38.94),
-       dict(k="seg", x1=xs[0], x2=xs[6], p1=28.6, p2=55.6, col="green", a=34.52, b=38.94, ys=YS, oy=OY),
+       dict(k="seg", x1=xs[1], x2=xs[5], p1=40.5, p2=55.5, col="green", a=34.52, b=38.94, ys=YS, oy=OY),
        dict(k="label", text="RISING LOWS", x=xs[4] + 70, y=YY(40), size=24, col="green", a=34.6, b=38.94),
        dict(k="arrow", x1=xs[-2], y1=YY(70), x2=xs[-1] + 50, y2=YY(92), col="green", a=37.4, b=38.94)]
 name("ASCENDING TRIANGLE", "green", 32.56, 38.94); SFX += [("pop", 33.98), ("pop", 34.52), ("impact", 37.4)]
