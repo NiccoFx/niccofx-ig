@@ -163,7 +163,7 @@ def dashed(d, x1, y, x2, col, al=255, w=4, dash=22, gap=14):
         d.line([x, y, min(x + dash, x2), y], fill=col + (al,), width=w); x += dash + gap
 
 
-CHART_KINDS = ("candle", "hline", "box", "ring", "bracket", "arrow", "dots", "band", "divider", "bar")
+CHART_KINDS = ("seg", "candle", "hline", "box", "ring", "bracket", "arrow", "dots", "band", "divider", "bar")
 
 
 def draw_chart(img, t, els):
@@ -200,6 +200,16 @@ def draw_chart(img, t, els):
                 d.line([xe, ye, xe - 34 * math.cos(ang + s * 0.5), ye - 34 * math.sin(ang + s * 0.5)], fill=col + (al,), width=8)
         elif k == "band":
             col = c(e["col"]); d.rectangle([e["x1"], e["y1"], e["x2"], e["y2"]], fill=col + (int(al * e.get("fill", 0.16)),), outline=col + (int(al * 0.6),), width=2)
+        elif k == "seg":
+            col = c(e.get("col", "gray")); g = ease((t - e["a"]) / 0.4); x1, x2 = e["x1"], e["x2"]; y1, y2 = Ye(e, e["p1"]), Ye(e, e["p2"])
+            xe, ye = x1 + (x2 - x1) * g, y1 + (y2 - y1) * g
+            if e.get("dash"):
+                n = max(1, int(math.hypot(xe - x1, ye - y1) / 30))
+                for q in range(n):
+                    a0, a1 = q / n, (q + 0.6) / n
+                    d.line([x1 + (xe - x1) * a0, y1 + (ye - y1) * a0, x1 + (xe - x1) * a1, y1 + (ye - y1) * a1], fill=col + (al,), width=5)
+            else:
+                d.line([x1, y1, xe, ye], fill=col + (al,), width=5)
         elif k == "divider":
             g = ease((t - e["a"]) / 0.4); d.line([e["x"], e["y1"], e["x"], e["y1"] + (e["y2"] - e["y1"]) * g], fill=c(e.get("col", "gray")) + (int(al * 0.6),), width=3)
         elif k == "bar":
