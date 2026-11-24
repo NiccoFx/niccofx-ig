@@ -349,7 +349,7 @@ def num_tile(n, col=ORANGE):
     return t
 
 
-UI_KINDS = ("pill", "label", "chips", "nums", "ui", "big")
+UI_KINDS = ("img", "pill", "label", "chips", "nums", "ui", "big")
 
 
 def draw_ui_layer(img, t, els):

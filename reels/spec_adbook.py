@@ -5,7 +5,7 @@ COVER = "/home/user/repo/w/ads/cover.png"
 EL, SFX = [], []
 for txt, x, y, rot, a in [("RANDOM YOUTUBE VIDEO", 330, 760, 6, 0.1), ("TIKTOK TIP #47", 720, 900, -7, 0.35), ("FREE PDF FROM A STRANGER", 400, 1060, -4, 0.6), ("ANOTHER INDICATOR", 700, 1220, 5, 0.85)]:
     EL.append(dict(k="pill", text=txt, col="gray", size=40, rot=rot, x=x, y=y, a=a, b=2.84)); SFX.append(("pop", a))
-EL += [dict(k="big", text="✕", col="red", size=420, x=540, y=1000, a=1.68, b=2.84)]
+EL += [dict(k="big", text="X", col="red", size=420, x=540, y=1000, a=1.68, b=2.84)]
 EL += [dict(k="img", src=COVER, w=560, x=540, y=1000, a=2.9, b=DUR)]
 for i, (txt, a) in enumerate([("250 CHAPTERS", 5.92), ("15 PARTS", 7.5), ("320 PAGES", 8.72)]):
     EL.append(dict(k="pill", text=txt, col="gold", fg=(20, 20, 22), size=46, x=540, y=1420 + i * 90, a=a, b=10.42)); SFX.append(("pop", a))
